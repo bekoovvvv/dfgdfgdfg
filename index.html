@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT-колледж — учебный проект сайта</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #141b34;
+      --line: #263057;
+      --text: #e7ebff;
+      --muted: #9aa5d1;
+      --accent: #4cc9f0;
+      --accent2: #7b61ff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif; line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+    /* ---------- Шапка ---------- */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(11,16,32,.92); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .bar { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-weight: 700; font-size: 20px; letter-spacing: .5px; }
+    .logo span { color: var(--accent); }
+    nav a { margin-left: 22px; color: var(--muted); font-size: 15px; }
+    nav a:hover { color: var(--accent); }
+
+    /* ---------- Главный экран ---------- */
+    .hero { padding: 90px 0 70px; text-align: center; }
+    .hero h1 { font-size: clamp(32px, 6vw, 56px); margin: 0 0 16px; line-height: 1.12; }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p { max-width: 620px; margin: 0 auto 28px; color: var(--muted); font-size: 18px; }
+    .btn {
+      display: inline-block; padding: 13px 26px; border-radius: 12px; border: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #08101f; font-weight: 700; font-size: 16px; cursor: pointer;
+    }
+    .btn:hover { filter: brightness(1.1); }
+    .code {
+      max-width: 520px; margin: 40px auto 0; text-align: left;
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+      padding: 18px 20px; font-family: Consolas, monospace; font-size: 15px;
+    }
+    .code .c { color: #6c7aa8; }
+    .code .k { color: var(--accent2); }
+    .code .s { color: #7ee787; }
+    .cursor { display: inline-block; width: 8px; height: 16px; background: var(--accent);
+              vertical-align: middle; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ---------- Секции ---------- */
+    section { padding: 64px 0; }
+    section h2 { font-size: 30px; margin: 0 0 8px; }
+    .lead { color: var(--muted); margin: 0 0 32px; }
+    .cards { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px;
+      transition: transform .2s, border-color .2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .card .ico { font-size: 30px; margin-bottom: 10px; }
+    .card h3 { margin: 0 0 6px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    .steps { counter-reset: s; display: grid; gap: 14px; }
+    .step {
+      counter-increment: s; background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 16px 18px 16px 64px; position: relative;
+    }
+    .step::before {
+      content: counter(s); position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+      width: 32px; height: 32px; border-radius: 50%; background: var(--accent2);
+      display: grid; place-items: center; font-weight: 700;
+    }
+
+    details {
+      background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+      padding: 14px 18px; margin-bottom: 10px;
+    }
+    summary { cursor: pointer; font-weight: 600; }
+    details p { color: var(--muted); margin: 10px 0 0; }
+
+    /* ---------- Форма ---------- */
+    form { display: grid; gap: 12px; max-width: 460px; }
+    input, select {
+      padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line);
+      background: var(--card); color: var(--text); font-size: 16px;
+    }
+    .ok { color: #7ee787; min-height: 24px; }
+
+    footer { border-top: 1px solid var(--line); padding: 26px 0; color: var(--muted); font-size: 14px; text-align: center; }
+    @media (max-width: 640px) { nav { display: none; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap bar">
+      <a class="logo" href="#top">IT<span>.</span>колледж</a>
+      <nav>
+        <a href="#programs">Направления</a>
+        <a href="#why">Почему мы</a>
+        <a href="#admission">Поступление</a>
+        <a href="#faq">Вопросы</a>
+        <a href="#apply">Заявка</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Главный экран -->
+    <div class="hero wrap">
+      <h1>Начни карьеру в <em>IT</em> уже в колледже</h1>
+      <p>Практика на реальных проектах, современные технологии и преподаватели, которые работают в индустрии.</p>
+      <a class="btn" href="#apply">Оставить заявку</a>
+
+      <div class="code">
+        <span class="c">// твой первый шаг</span><br>
+        <span class="k">const</span> future = <span class="s">"IT-специалист"</span>;<br>
+        <span class="k">function</span> start() { <span class="k">return</span> <span class="s">"поступай!"</span>; }<span class="cursor"></span>
+      </div>
+    </div>
+
+    <!-- Направления -->
+    <section id="programs">
+      <div class="wrap">
+        <h2>Направления обучения</h2>
+        <p class="lead">Примеры направлений — замените названиями из вашего колледжа.</p>
+        <div class="cards">
+          <div class="card"><div class="ico">💻</div><h3>Программирование</h3><p>Алгоритмы, языки программирования, разработка приложений.</p></div>
+          <div class="card"><div class="ico">🌐</div><h3>Веб-разработка</h3><p>HTML, CSS, JavaScript, создание сайтов и веб-сервисов.</p></div>
+          <div class="card"><div class="ico">🎨</div><h3>Дизайн интерфейсов</h3><p>UX/UI, прототипы, работа с графикой и интерфейсами.</p></div>
+          <div class="card"><div class="ico">🔒</div><h3>Информационная безопасность</h3><p>Защита данных, сети и основы кибербезопасности.</p></div>
+          <div class="card"><div class="ico">📊</div><h3>Данные и аналитика</h3><p>Базы данных, обработка и визуализация данных.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Почему мы -->
+    <section id="why">
+      <div class="wrap">
+        <h2>Почему здесь интересно учиться</h2>
+        <p class="lead">Три идеи, на которых строится обучение.</p>
+        <div class="cards">
+          <div class="card"><div class="ico">🛠️</div><h3>Больше практики</h3><p>Учебные проекты, командная работа, портфолио к выпуску.</p></div>
+          <div class="card"><div class="ico">🤝</div><h3>Наставники</h3><p>Преподаватели с опытом работы в IT-компаниях.</p></div>
+          <div class="card"><div class="ico">🚀</div><h3>Старт карьеры</h3><p>Стажировки, хакатоны и встречи с работодателями.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Поступление -->
+    <section id="admission">
+      <div class="wrap">
+        <h2>Как поступить</h2>
+        <p class="lead">Четыре простых шага (уточните детали у приёмной комиссии).</p>
+        <div class="steps">
+          <div class="step">Выбери направление обучения</div>
+          <div class="step">Подай документы в приёмную комиссию</div>
+          <div class="step">Пройди вступительное собеседование или тестирование</div>
+          <div class="step">Получи результат и приступай к учёбе</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Вопросы -->
+    <section id="faq">
+      <div class="wrap">
+        <h2>Частые вопросы</h2>
+        <p class="lead">Нажми на вопрос, чтобы увидеть ответ.</p>
+        <details><summary>Нужно ли уметь программировать до поступления?</summary><p>Не обязательно. Обучение начинается с основ.</p></details>
+        <details><summary>Можно ли совмещать учёбу и подработку?</summary><p>Уточните расписание занятий в приёмной комиссии.</p></details>
+        <details><summary>Будет ли практика на реальных проектах?</summary><p>Да, практика — важная часть программы обучения.</p></details>
+      </div>
+    </section>
+
+    <!-- Заявка -->
+    <section id="apply">
+      <div class="wrap">
+        <h2>Оставить заявку</h2>
+        <p class="lead">Демо-форма: данные никуда не отправляются.</p>
+        <form id="form">
+          <input type="text" id="name" placeholder="Твоё имя" required>
+          <select id="program">
+            <option>Программирование</option>
+            <option>Веб-разработка</option>
+            <option>Дизайн интерфейсов</option>
+            <option>Информационная безопасность</option>
+            <option>Данные и аналитика</option>
+          </select>
+          <button class="btn" type="submit">Отправить</button>
+          <div class="ok" id="ok"></div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Учебный проект: макет сайта, не является официальным сайтом колледжа.
+  </footer>
+
+  <script>
+    // Реакция на отправку формы: только показываем сообщение, ничего не отправляем
+    document.getElementById("form").addEventListener("submit", function (event) {
+      event.preventDefault(); // отменяем перезагрузку страницы
+      const name = document.getElementById("name").value.trim();
+      const program = document.getElementById("program").value;
+      document.getElementById("ok").textContent =
+        "Спасибо, " + name + "! Заявка на направление «" + program + "» принята (демо).";
+      this.reset();
+    });
+  </script>
+</body>
+</html>
